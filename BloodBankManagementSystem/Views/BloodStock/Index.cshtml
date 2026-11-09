@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BloodBankManagementSystem.Models.BloodStock>
+@{
+    ViewData["Title"] = "Blood Inventory";
+    const int LowStockLimit = 5;
+}
+
+<h1>Blood Inventory</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<p class="text-muted">Stock below @LowStockLimit units is shown in red.</p>
+
+<table class="table table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Blood Group</th>
+            <th>Units Available</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+            <th>Add / Remove Units</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><strong>@item.BloodGroup</strong></td>
+                <td>@item.Units</td>
+                <td>
+                    @if (item.Units == 0)
+                    {
+                        <span class="badge bg-danger">Out of stock</span>
+                    }
+                    else if (item.Units < LowStockLimit)
+                    {
+                        <span class="badge bg-warning text-dark">Low stock</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Available</span>
+                    }
+                </td>
+                <td>@item.LastUpdated.ToString("dd MMM yyyy, hh:mm tt")</td>
+                <td>
+                    <form asp-action="Adjust" method="post" class="d-flex gap-2">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="number" name="units" class="form-control form-control-sm"
+                               style="width:100px" placeholder="e.g. 5 or -2" required />
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

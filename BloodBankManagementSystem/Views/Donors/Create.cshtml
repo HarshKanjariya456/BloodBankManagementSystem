@@ -1,0 +1,23 @@
+﻿@model BloodBankManagementSystem.Models.Donor
+@{
+    ViewData["Title"] = "Add Donor";
+}
+
+<h1>Add Donor</h1>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="_DonorForm" model="Model" />
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

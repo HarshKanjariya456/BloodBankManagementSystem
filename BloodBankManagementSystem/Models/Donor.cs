@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BloodBankManagementSystem.Models
 {
@@ -32,5 +33,14 @@ namespace BloodBankManagementSystem.Models
         [DataType(DataType.Date)]
         [Display(Name = "Last Donation Date")]
         public DateTime? LastDonationDate { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Eligible to Donate")]
+        public bool IsEligible =>
+        LastDonationDate == null || (DateTime.Today - LastDonationDate.Value).TotalDays >= 90;
+
+        [NotMapped]
+        [Display(Name = "Next Eligible Date")]
+        public DateTime? NextEligibleDate => LastDonationDate?.AddDays(90);
     }
 }

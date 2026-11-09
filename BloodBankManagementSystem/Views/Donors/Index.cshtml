@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BloodBankManagementSystem.Models.Donor>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Donors";
+    var bloodGroups = (SelectList)ViewData["BloodGroups"]!;
+}
+
+<h1>Donors</h1>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+<p><a asp-action="Create" class="btn btn-success">Add New Donor</a></p>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="city" value="@ViewData["City"]"
+               class="form-control" placeholder="Search by city" />
+    </div>
+    <div class="col-md-4">
+        <select name="bloodGroup" asp-items="bloodGroups" class="form-select">
+            <option value="">All Blood Groups</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-action="Index" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Blood Group</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>Eligible</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+                <td>@item.Age</td>
+                <td>@item.Gender</td>
+                <td>@item.BloodGroup</td>
+                <td>@item.Phone</td>
+                <td>@item.City</td>
+                <td>
+                    @if (item.IsEligible)
+                    {
+                        <span class="badge bg-success">Eligible</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Next: @item.NextEligibleDate?.ToString("dd MMM yyyy")</span>
+                    }
+                </td>
+                <td class="text-nowrap">
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (item.IsEligible)
+                    {
+                        <form asp-action="RecordDonation" asp-route-id="@item.Id" method="post" class="d-inline ms-2">
+                            <button type="submit" class="btn btn-sm btn-danger">Record Donation</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

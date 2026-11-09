@@ -1,0 +1,30 @@
+﻿@model BloodBankManagementSystem.Models.Donor
+@{
+    ViewData["Title"] = "Donor Details";
+}
+
+<h1>Donor Details</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Name</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+    <dt class="col-sm-3">Age</dt>
+    <dd class="col-sm-9">@Model.Age</dd>
+    <dt class="col-sm-3">Gender</dt>
+    <dd class="col-sm-9">@Model.Gender</dd>
+    <dt class="col-sm-3">Blood Group</dt>
+    <dd class="col-sm-9">@Model.BloodGroup</dd>
+    <dt class="col-sm-3">Phone</dt>
+    <dd class="col-sm-9">@Model.Phone</dd>
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">City</dt>
+    <dd class="col-sm-9">@Model.City</dd>
+    <dt class="col-sm-3">Last Donation</dt>
+    <dd class="col-sm-9">@Model.LastDonationDate?.ToString("dd MMM yyyy")</dd>
+    <dt class="col-sm-3">Eligible</dt>
+    <dd class="col-sm-9">@(Model.IsEligible ? "Yes" : "No")</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
