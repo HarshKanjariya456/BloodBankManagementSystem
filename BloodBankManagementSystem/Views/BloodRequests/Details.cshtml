@@ -1,0 +1,38 @@
+﻿@model BloodBankManagementSystem.Models.BloodRequest
+@{
+    ViewData["Title"] = "Request Details";
+    var available = (int)ViewData["AvailableUnits"]!;
+}
+
+<h1>Request #@Model.Id</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Patient</dt>
+    <dd class="col-sm-9">@Model.PatientName</dd>
+    <dt class="col-sm-3">Hospital</dt>
+    <dd class="col-sm-9">@Model.HospitalName</dd>
+    <dt class="col-sm-3">Blood Group</dt>
+    <dd class="col-sm-9">@Model.BloodGroup</dd>
+    <dt class="col-sm-3">Units Required</dt>
+    <dd class="col-sm-9">@Model.UnitsRequired</dd>
+    <dt class="col-sm-3">Contact</dt>
+    <dd class="col-sm-9">@Model.ContactNumber</dd>
+    <dt class="col-sm-3">Request Date</dt>
+    <dd class="col-sm-9">@Model.RequestDate.ToString("dd MMM yyyy, hh:mm tt")</dd>
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@Model.Status</dd>
+    <dt class="col-sm-3">Units in Stock</dt>
+    <dd class="col-sm-9">
+        @available
+        @if (available >= Model.UnitsRequired)
+        {
+            <span class="badge bg-success ms-2">Enough stock</span>
+        }
+        else
+        {
+            <span class="badge bg-danger ms-2">Not enough stock</span>
+        }
+    </dd>
+</dl>
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>

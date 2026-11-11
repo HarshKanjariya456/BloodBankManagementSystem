@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BloodBankManagementSystem.Models.BloodRequest>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using BloodBankManagementSystem.Models
+@{
+    ViewData["Title"] = "Blood Requests";
+    var statuses = (SelectList)ViewData["Statuses"]!;
+}
+
+<h1>Blood Requests</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<p><a asp-action="Create" class="btn btn-success">New Request</a></p>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <select name="status" asp-items="statuses" class="form-select">
+            <option value="">All Statuses</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-action="Index" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Patient</th>
+            <th>Hospital</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.PatientName</td>
+                <td>@item.HospitalName</td>
+                <td>@item.BloodGroup</td>
+                <td>@item.UnitsRequired</td>
+                <td>@item.RequestDate.ToString("dd MMM yyyy")</td>
+                <td>
+                    @if (item.Status == RequestStatus.Pending)
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                    else if (item.Status == RequestStatus.Approved)
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                </td>
+                <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
