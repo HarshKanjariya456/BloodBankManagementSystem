@@ -6,6 +6,15 @@
 
 <h1>Request #@Model.Id</h1>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 <dl class="row">
     <dt class="col-sm-3">Patient</dt>
     <dd class="col-sm-9">@Model.PatientName</dd>
@@ -35,4 +44,19 @@
     </dd>
 </dl>
 
+@if (Model.Status == BloodBankManagementSystem.Models.RequestStatus.Pending)
+{
+    <form asp-action="Approve" asp-route-id="@Model.Id" method="post" class="d-inline">
+        <button type="submit" class="btn btn-success"
+                onclick="return confirm('Approve this request and deduct stock?');">
+            Approve
+        </button>
+    </form>
+    <form asp-action="Reject" asp-route-id="@Model.Id" method="post" class="d-inline">
+        <button type="submit" class="btn btn-danger"
+                onclick="return confirm('Reject this request?');">
+            Reject
+        </button>
+    </form>
+}
 <a asp-action="Index" class="btn btn-secondary">Back</a>

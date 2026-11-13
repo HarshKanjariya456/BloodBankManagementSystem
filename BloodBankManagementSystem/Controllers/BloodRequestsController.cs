@@ -61,5 +61,58 @@ namespace BloodBankManagementSystem.Controllers
             }
             return View(request);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Approve(int id)
+        {
+            var request = await _context.BloodRequests.FindAsync(id);
+            if (request == null) return NotFound();
+
+            if (request.Status != RequestStatus.Pending)
+            {
+                TempData["Error"] = "This request has already been processed.";
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            var stock = await _context.BloodStocks
+                .FirstOrDefaultAsync(s => s.BloodGroup == request.BloodGroup);
+
+            if (stock == null || stock.Units < request.UnitsRequired)
+            {
+                TempData["Error"] =
+                    $"Cannot approve. Required: {request.UnitsRequired} unit(s), available: {stock?.Units ?? 0}.";
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            stock.Units -= request.UnitsRequired;
+            stock.LastUpdated = DateTime.Now;
+            request.Status = RequestStatus.Approved;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Request approved. {request.UnitsRequired} unit(s) deducted from {request.BloodGroup}.";
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var request = await _context.BloodRequests.FindAsync(id);
+            if (request == null) return NotFound();
+
+            if (request.Status != RequestStatus.Pending)
+            {
+                TempData["Error"] = "This request has already been processed.";
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            request.Status = RequestStatus.Rejected;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Request rejected.";
+            return RedirectToAction(nameof(Details), new { id });
+        }
     }
 }
