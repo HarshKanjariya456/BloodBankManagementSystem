@@ -1,9 +1,10 @@
 ﻿using BloodBankManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BloodBankManagementSystem.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
@@ -14,6 +15,7 @@ namespace BloodBankManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             // Seed one stock row for each blood group with 0 units
             foreach (BloodGroup bg in Enum.GetValues(typeof(BloodGroup)))
             {

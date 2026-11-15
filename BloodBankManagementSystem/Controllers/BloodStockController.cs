@@ -2,9 +2,11 @@
 using BloodBankManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BloodBankManagementSystem.Controllers
 {
+    [Authorize]
     public class BloodStockController : Controller
     {
         private readonly ApplicationDbContext _context;
