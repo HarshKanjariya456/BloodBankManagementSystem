@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Donors";
-    var bloodGroups = (SelectList)ViewData["BloodGroups"]!;
+    var bloodGroups = (List<SelectListItem>)ViewData["BloodGroups"]!;
 }
 
 <h1>Donors</h1>
@@ -52,7 +52,7 @@
                 <td>@item.FullName</td>
                 <td>@item.Age</td>
                 <td>@item.Gender</td>
-                <td>@item.BloodGroup</td>
+                <td>@item.BloodGroup.DisplayName()</td>
                 <td>@item.Phone</td>
                 <td>@item.City</td>
                 <td>

@@ -1,14 +1,16 @@
-﻿namespace BloodBankManagementSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BloodBankManagementSystem.Models
 {
     public enum BloodGroup
     {
-        APositive = 1,
-        ANegative,
-        BPositive,
-        BNegative,
-        ABPositive,
-        ABNegative,
-        OPositive,
-        ONegative
+        [Display(Name = "A+")] APositive = 1,
+        [Display(Name = "A-")] ANegative,
+        [Display(Name = "B+")] BPositive,
+        [Display(Name = "B-")] BNegative,
+        [Display(Name = "AB+")] ABPositive,
+        [Display(Name = "AB-")] ABNegative,
+        [Display(Name = "O+")] OPositive,
+        [Display(Name = "O-")] ONegative
     }
 }
