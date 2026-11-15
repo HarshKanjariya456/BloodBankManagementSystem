@@ -28,7 +28,13 @@ namespace BloodBankManagementSystem.Controllers
                 donors = donors.Where(d => d.BloodGroup == bloodGroup.Value);
 
             ViewData["City"] = city;
-            ViewData["BloodGroups"] = new SelectList(Enum.GetValues<BloodGroup>(), bloodGroup);
+            ViewData["BloodGroups"] = Enum.GetValues<BloodGroup>()
+                .Select(b => new SelectListItem
+                {
+                    Value = b.ToString(),
+                    Text = b.DisplayName(),
+                    Selected = bloodGroup.HasValue && bloodGroup.Value == b
+                }).ToList();
 
             return View(await donors.OrderBy(d => d.FullName).ToListAsync());
         }

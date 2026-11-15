@@ -31,7 +31,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><strong>@item.BloodGroup</strong></td>
+                <td><strong>@item.BloodGroup.DisplayName()</strong></td>
                 <td>@item.Units</td>
                 <td>
                     @if (item.Units == 0)
