@@ -1,0 +1,48 @@
+﻿@model List<BloodBankManagementSystem.Models.BloodRequest>
+@using BloodBankManagementSystem.Models
+@{
+    ViewData["Title"] = "Track Request";
+}
+
+<h2>Track Your Request</h2>
+
+<form asp-action="Track" method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <input type="text" name="phone" class="form-control" placeholder="Enter Contact number used in request" />
+    </div>
+    <div class="col-md-3"><button class="btn btn-primary">Check</button></div>
+    <a asp-controller="Home" asp-action="Landing" class="btn btn-secondary mt-3">Back to Home</a>
+</form>
+
+@if (ViewData["Searched"] as bool? == true && !Model.Any())
+{
+    <div class="alert alert-danger">No request found.</div>
+}
+
+@foreach (var r in Model)
+{
+    <div class="card mb-2" style="max-width:480px">
+        <div class="card-body">
+            <p class="mb-1"><strong>Request #@r.Id</strong> - @r.RequestDate.ToString("dd MMM yyyy")</p>
+            <p class="mb-1">Patient: @r.PatientName</p>
+            <p class="mb-1">Blood group: @r.BloodGroup.DisplayName() (@r.UnitsRequired unit(s))</p>
+            <p class="mb-0">
+                Status:
+                @if (r.Status == RequestStatus.Pending)
+                {
+                    <span class="badge bg-warning text-dark">Pending</span>
+                }
+                else if (r.Status == RequestStatus.Approved)
+                {
+
+                    <span class="badge bg-success">Approved</span>
+                }
+                else
+                {
+
+                    <span class="badge bg-danger">Rejected</span>
+                }
+            </p>
+        </div>
+    </div>
+}

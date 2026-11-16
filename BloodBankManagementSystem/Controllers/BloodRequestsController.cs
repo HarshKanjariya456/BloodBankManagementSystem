@@ -43,8 +43,10 @@ namespace BloodBankManagementSystem.Controllers
             return View(request);
         }
 
+        [AllowAnonymous]
         public IActionResult Create() => View();
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -59,7 +61,7 @@ namespace BloodBankManagementSystem.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Success"] = "Blood request submitted successfully.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Submitted), new { id = request.Id });
             }
             return View(request);
         }
@@ -115,6 +117,32 @@ namespace BloodBankManagementSystem.Controllers
 
             TempData["Success"] = "Request rejected.";
             return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Submitted(int id)
+        {
+            var request = await _context.BloodRequests.FindAsync(id);
+            if (request == null) return NotFound();
+            return View(request);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Track(int? id, string? phone)
+        {
+            if (id == null && string.IsNullOrWhiteSpace(phone))
+                return View(new List<BloodRequest>());
+
+            var query = _context.BloodRequests.AsQueryable();
+
+            if (id != null)
+                query = query.Where(r => r.Id == id);
+            else
+                query = query.Where(r => r.ContactNumber == phone!.Trim());
+
+            var results = await query.OrderByDescending(r => r.RequestDate).ToListAsync();
+            ViewData["Searched"] = true;
+            return View(results);
         }
     }
 }
