@@ -29,10 +29,6 @@ namespace BloodBankManagementSystem.Controllers
             return View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [AllowAnonymous]
@@ -46,6 +42,20 @@ namespace BloodBankManagementSystem.Controllers
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Landing()
+        {
+            if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction(nameof(Index));
+
+            ViewData["Stocks"] = await _context.BloodStocks.OrderBy(s => s.BloodGroup).ToListAsync();
+            ViewData["DonorCount"] = await _context.Donors.CountAsync();
+            ViewData["FulfilledCount"] = await _context.BloodRequests
+                .CountAsync(r => r.Status == RequestStatus.Approved);
+
+            return View();
         }
     }
 }

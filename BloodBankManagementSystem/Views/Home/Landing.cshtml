@@ -1,0 +1,106 @@
+﻿@using BloodBankManagementSystem.Models
+@{
+    ViewData["Title"] = "Welcome";
+    var stocks = (List<BloodStock>)ViewData["Stocks"]!;
+    var donorCount = (int)ViewData["DonorCount"]!;
+    var fulfilled = (int)ViewData["FulfilledCount"]!;
+    var totalUnits = stocks.Sum(s => s.Units);
+}
+
+<!-- Hero -->
+<section class="text-center text-white rounded-4 p-5 mb-4"
+         style="background: linear-gradient(135deg, #dc3545 0%, #8b0f1c 100%);">
+    <div style="font-size:3rem;">🩸</div>
+    <h1 class="display-5 fw-bold">Every drop can save a life</h1>
+    <p class="lead mb-4">
+        Need blood urgently? Submit a request in under a minute and our team will respond.
+    </p>
+    <a asp-controller="BloodRequests" asp-action="Create" class="btn btn-light btn-lg m-1 fw-semibold text-danger">Request Blood</a>
+    <a asp-controller="BloodRequests" asp-action="Track" class="btn btn-outline-light btn-lg m-1">Track My Request</a>
+</section>
+
+<!-- Statistics -->
+<section class="row g-3 mb-5 text-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="text-danger mb-0">@donorCount</h2>
+                <p class="text-muted mb-0">Registered donors</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="text-danger mb-0">@totalUnits</h2>
+                <p class="text-muted mb-0">Units in stock</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="text-danger mb-0">@fulfilled</h2>
+                <p class="text-muted mb-0">Requests fulfilled</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Availability -->
+<section class="mb-5">
+    <h3 class="text-center mb-3">Current Blood Availability</h3>
+    <div class="row g-3 justify-content-center">
+        @foreach (var s in stocks)
+        {
+            var color = s.Units == 0 ? "danger" : s.Units < 5 ? "warning" : "success";
+            var label = s.Units == 0 ? "Unavailable" : s.Units < 5 ? "Low" : "Available";
+            <div class="col-6 col-md-3">
+                <div class="card border-@color text-center h-100">
+                    <div class="card-body">
+                        <h4 class="mb-1">@s.BloodGroup.DisplayName()</h4>
+                        <span class="badge bg-@color @(color == "warning" ? "text-dark" : "")">@label</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- How it works -->
+<section class="mb-5">
+    <h3 class="text-center mb-3">How It Works</h3>
+    <div class="row g-3 text-center">
+        <div class="col-md-4">
+            <div class="p-3">
+                <div class="fs-1">📝</div>
+                <h5>1. Submit a request</h5>
+                <p class="text-muted">Enter patient, hospital, blood group and units needed.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3">
+                <div class="fs-1">🔍</div>
+                <h5>2. We verify stock</h5>
+                <p class="text-muted">Our staff checks availability and reviews the request.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3">
+                <div class="fs-1">✅</div>
+                <h5>3. Track the status</h5>
+                <p class="text-muted">Use your request number or phone number to see if it is approved.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Donor info -->
+<section class="bg-light rounded-4 p-4 mb-4">
+    <h4 class="text-danger">Who can donate blood?</h4>
+    <ul class="mb-0">
+        <li>Age between 18 and 65 years</li>
+        <li>In good health at the time of donation</li>
+        <li>At least 90 days since the last donation</li>
+    </ul>
+</section>
