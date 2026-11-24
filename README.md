@@ -12,6 +12,14 @@ Entity Framework Core to manage blood donors, blood inventory and blood requests
 - Blood stock management with low-stock and out-of-stock highlights
 - Blood requests with approve/reject; approval checks and deducts stock
 
+## Team Members & Work Distribution
+
+| Member | Role & Module | Responsibilities & Completed Work |
+| :--- | :--- | :--- |
+| **Harsh Kanjariya** | **System Architecture & Authentication** | • Scaffolding project and configuring Entity Framework Core with SQL Server LocalDB<br>• Implementing ASP.NET Core Identity for secure admin login and session management (`AccountController`, `LoginViewModel`)<br>• Designing and implementing Admin Dashboard with real-time summary statistics cards (`HomeController`, `DashboardViewModel`)<br>• Initial database migrations and seeding |
+| **Rajvir Dodiya (Rajvir_dodiya)** | **Donor & Blood Stock Management** | • Complete Donor CRUD system (Create, Read, Update, Delete) with search by city and blood group (`DonorsController`, `Donor.cs`)<br>• 90-day donation eligibility validation business logic<br>• **Record Donation** workflow: automatically updates donor's last donation date and increments corresponding blood stock by 1 unit<br>• Blood Stock Inventory management with real-time stock levels and low-stock warning indicators (`BloodStockController`, `BloodStock.cs`) |
+| **Arun Busa (arunbusa06)** | **Blood Requests & Public Tracking Portal** | • Blood Request submission models, validation, and listing (`BloodRequestsController`, `BloodRequest.cs`)<br>• Request Approval & Rejection engine with automatic stock availability check and inventory deduction<br>• Public-facing Blood Request form and online request tracking portal (`Landing.cshtml`, `Track.cshtml`, `Submitted.cshtml`)<br>• Responsive Bootstrap 5 theme design, custom navbar navigation, and UI polish (`site.css`, `_Layout.cshtml`) |
+
 ## Technologies
 - ASP.NET Core MVC, C#
 - Entity Framework Core, SQL Server LocalDB
