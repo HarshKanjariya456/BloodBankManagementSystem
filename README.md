@@ -42,9 +42,6 @@ Click **[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](
 2. Press **F5** (or run `dotnet run`). The database, seed data, and admin account are **automatically created and migrated on first launch**!
 3. Default Admin Login: `admin@bloodbank.com` / `Admin@123`
 
-## Project Viva & Defense Guide
-A complete 3-member technical viva examination question and answer guide is included in:
-📄 **[BloodBankManagementSystem_Viva_Preparation_Guide.pdf](BloodBankManagementSystem_Viva_Preparation_Guide.pdf)** (covering detailed questions for Harsh, Rajvir, and Arun).
 
 ## Future scope
 - Donation history table
