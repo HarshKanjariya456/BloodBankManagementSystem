@@ -1,7 +1,11 @@
 {
   "name": "Blood Bank Management System",
   "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
-  "forwardPorts": [5000, 5001],
+  "containerEnv": {
+    "ASPNETCORE_URLS": "http://0.0.0.0:5000",
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  },
+  "forwardPorts": [5000],
   "portsAttributes": {
     "5000": {
       "label": "Blood Bank Web Application",
