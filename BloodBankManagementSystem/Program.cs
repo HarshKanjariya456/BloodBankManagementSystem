@@ -7,8 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. Services (everything on builder.Services goes here)
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Cross-Platform Database: On Linux/Codespaces/Docker use SQLite; on Windows use SQL Server LocalDB
+if (!OperatingSystem.IsWindows())
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlite("Data Source=BloodBank.db"));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -32,12 +43,15 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     try
     {
-        context.Database.Migrate();
+        if (context.Database.IsSqlite())
+            context.Database.EnsureCreated();
+        else
+            context.Database.Migrate();
     }
     catch (Exception ex)
     {
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while automatically migrating the database.");
+        logger.LogError(ex, "An error occurred while automatically initializing the database.");
     }
 
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
