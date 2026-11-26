@@ -1,0 +1,20 @@
+{
+  "name": "Blood Bank Management System",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
+  "forwardPorts": [5000, 5001],
+  "portsAttributes": {
+    "5000": {
+      "label": "Blood Bank Web Application",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "cd BloodBankManagementSystem && dotnet restore && dotnet build",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit"
+      ]
+    }
+  }
+}

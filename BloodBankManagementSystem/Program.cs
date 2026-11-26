@@ -26,9 +26,20 @@ builder.Services.ConfigureApplicationCookie(options =>
 // 2. Build the app
 var app = builder.Build();
 
-// 3. Seed the admin user (after Build)
+// 3. Auto-apply migrations & seed the admin user (after Build)
 using (var scope = app.Services.CreateScope())
 {
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while automatically migrating the database.");
+    }
+
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 

@@ -1,5 +1,11 @@
 # Blood Bank Management System
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/HarshKanjariya456/BloodBankManagementSystem)
+[![.NET 10](https://img.shields.io/badge/.NET-10.0-purple.svg)](https://dotnet.microsoft.com/)
+[![Entity Framework Core](https://img.shields.io/badge/EF%20Core-10.0-blue.svg)](https://docs.microsoft.com/ef/core/)
+
+> 🚀 **1-Click Live Cloud Launch:** Click the **Open in GitHub Codespaces** button above to automatically launch the project, spin up the database, and run the live web app in your browser!
+
 A web-based application built with ASP.NET Core MVC (.NET 10), C# and
 Entity Framework Core to manage blood donors, blood inventory and blood requests.
 
@@ -27,10 +33,18 @@ Entity Framework Core to manage blood donors, blood inventory and blood requests
 - Bootstrap 5
 
 ## How to run
-1. Clone the repository and open the solution in Visual Studio.
-2. Open Package Manager Console and run `Update-Database`.
-3. Press F5.
-4. Login: `admin@bloodbank.com` / `Admin@123`
+
+### Option A: 1-Click Live in GitHub (Zero Setup)
+Click **[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/HarshKanjariya456/BloodBankManagementSystem)** — GitHub automatically configures the environment, restores dependencies, auto-migrates the database, and launches the live web app in your browser!
+
+### Option B: Run Locally
+1. Clone the repository and open the solution in Visual Studio or VS Code.
+2. Press **F5** (or run `dotnet run`). The database, seed data, and admin account are **automatically created and migrated on first launch**!
+3. Default Admin Login: `admin@bloodbank.com` / `Admin@123`
+
+## Project Viva & Defense Guide
+A complete 3-member technical viva examination question and answer guide is included in:
+📄 **[BloodBankManagementSystem_Viva_Preparation_Guide.pdf](BloodBankManagementSystem_Viva_Preparation_Guide.pdf)** (covering detailed questions for Harsh, Rajvir, and Arun).
 
 ## Future scope
 - Donation history table
