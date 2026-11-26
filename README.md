@@ -31,10 +31,6 @@ Entity Framework Core to manage blood donors, blood inventory and blood requests
 
 ## How to run
 
-### Option A: 1-Click Live in GitHub (Zero Setup)
-Click **[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/HarshKanjariya456/BloodBankManagementSystem)** — GitHub automatically configures the environment, restores dependencies, auto-migrates the database, and launches the live web app in your browser!
-
-### Option B: Run Locally
 1. Clone the repository and open the solution in Visual Studio or VS Code.
 2. Press **F5** (or run `dotnet run`). The database, seed data, and admin account are **automatically created and migrated on first launch**!
 3. Default Admin Login: `admin@bloodbank.com` / `Admin@123`
