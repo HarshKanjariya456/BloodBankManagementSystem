@@ -4,7 +4,7 @@
 [![.NET 10](https://img.shields.io/badge/.NET-10.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Entity Framework Core](https://img.shields.io/badge/EF%20Core-10.0-blue.svg)](https://docs.microsoft.com/ef/core/)
 
-> 🚀 **1-Click Live Cloud Launch:** Click the **Open in GitHub Codespaces** button above to automatically launch the project, spin up the database, and run the live web app in your browser!
+
 
 A web-based application built with ASP.NET Core MVC (.NET 10), C# and
 Entity Framework Core to manage blood donors, blood inventory and blood requests.
